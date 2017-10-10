@@ -13,6 +13,7 @@ var PrivacyPolicy = function(store) {
 
 	acceptPP = function() {
 
+		$("#pp-body").hide ();
 	  var self = this;
 	  this.store = new MemoryStore(function() {
 		  $('.main-content').html(new HomeView(self.store).render().el);//load the home div class

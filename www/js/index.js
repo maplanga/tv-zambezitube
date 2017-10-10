@@ -22,7 +22,7 @@ var app = {
         this.bindEvents();
 		var self = this;
  		this.store = new MemoryStore(function() {
-        	$('.main-content').html(new PrivacyPolicy(self.store).render().el);//load the home div class
+        	$('.policy-content').html(new PrivacyPolicy(self.store).render().el);//load the home div class
    		});	
 		
     },
