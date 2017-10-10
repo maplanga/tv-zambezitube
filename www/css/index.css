@@ -1,0 +1,408 @@
+.fa
+{
+	font-size:60px;
+}
+
+#nav
+{
+	background-color:#e2e2e2;
+	padding:10px;
+}
+
+#login-body
+{
+	background-image:url(../img/login_background.jpg);
+	margin:auto 0;
+	padding-top:20px;
+	padding-bottom:10%;
+}
+#main-body
+{
+	background-image:url(../img/main_background.jpg);
+	margin:auto 0;
+	background-size:cover;
+	background-repeat:repeat-y;
+}
+.form-labels
+{
+	color:#FFF;
+	font-size:12px;
+}
+.img-button
+{
+	border:none !important;
+	padding:0px !important;
+}
+.heading
+{
+	font-size:18px;
+	font-weight:bold;
+	padding:10px;
+}
+
+/*---------------REGISTRATION FORM STYLE---------------*/
+#top-header
+{
+	padding:0px;
+}
+body, form, ul, li, p, h2, h3, h4, h5
+    {
+    margin: 0;
+    padding: 0;
+    }
+h1
+{
+	color:#FFF;
+	font-weight:bold;
+}
+h2
+{
+	color:#FFF;
+	font-size:small;
+	text-transform:uppercase;
+	padding:10px;
+}
+p
+{
+	color:#FFF;
+	font-size:small;
+}
+#vidtitle
+{
+	font-size:large;
+	padding:10px;
+	text-transform:uppercase;
+	background-color:#0b70d3;
+}
+#videomenu {
+    background-color:#bf1010;
+    border-color: transparent;
+	font-weight:bold;
+}
+#mainnav {
+    background-color:transparent;
+    border-color: transparent;
+	font-weight:bold;
+}
+#mainnav .navbar-toggle {
+    border-color:#000000;
+	background-color:#000000;
+}
+#mainnav .icon-bar {
+    background-color: #ffffff;
+}
+#mainnav .navbar-collapse {
+	color:#FFF;
+    border-color: #000000;
+	background-color: #000000;
+}
+#mainnav .nav>li:nth-child(odd) {
+    background-color: #333333 !important; /* Green */
+    color:#ffffff !important;
+}
+#mainnav-items>li {
+    color:#ffffff;
+	text-align:center;
+	padding:20px;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color:transparent;
+	background-color:#bf1010;
+}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: transparent;
+}
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #000000;
+}
+button {
+    border: none;
+}
+.nav button {
+    background-color: transparent; /* Green */
+    border: none;
+    color:#FFFFFF;
+    padding: 15px 32px;
+    text-align: center;
+	text-transform:uppercase;
+    text-decoration: none;
+    display: inline-block;
+    font-size:medium;
+}
+.nav>li:nth-child(odd) {
+    background-color: #5f0808 !important; /* Green */
+    color:#bf1010 !important;
+}
+p
+{
+	padding:5px;
+}
+body
+    {
+    background-color: #ffffff;
+    color: #666;
+    }
+ 
+#signup img
+    {
+    border: none;
+    }
+ 
+#signup p
+    {
+    margin: 0 0 1em 0;
+    }
+ .vidheading
+ {
+	 color:#FFF;
+	 font-weight:bold;
+
+ }
+  .vidheading button
+ {
+	 color:#FFF;
+	 font-weight:bold;
+	 background-color:#2a6fc8;
+	 padding:10px 20px;
+	 	 border:none;
+		 font-size:12px;
+		 	 width:100%;
+	 text-align:center;
+	 position:relative;
+	 text-transform:uppercase;
+ }
+#signup h2
+    {
+    font-size: 14px;
+    margin: 0 0 12px;
+    }
+	 .img-thumbnail
+ {
+	 padding:0px;
+	 border:none;
+	 background-color:transparent;
+ }
+ .img-thumbnail img
+ {
+ }
+  .img-thumbnail button
+ {
+	 padding:0px;
+	 border:none;
+	 margin-bottom:10px;
+	 background-color:transparent;
+ }
+ 
+.red-btn
+    {
+    margin: 20px auto;
+	font-weight:bold;
+	color:#FFF;
+	background-color:#b61a1a;
+	border:solid #FFF 2px;
+	padding:10px 20px;
+    }
+	
+	 
+.blue-btn
+    {
+    margin: 20px auto;
+	font-weight:bold;
+	color:#FFF;
+	background-color:#1187be;
+	border:solid #FFF 2px;
+	padding:10px 20px;
+    }
+ .cta-btn
+    {
+    margin: 20px auto;
+	font-weight:bold;
+	color:#FFF;
+	background-color:#f76903;
+	border:solid #FFF 2px;
+	padding:10px 20px;
+    }
+#signup fieldset
+    {
+    margin: 0 0 20px;
+    padding: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+ 
+#signup ol
+    {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    }
+ 
+#signup li
+    {
+    margin: 0 0 12px;
+    position: relative;
+    }
+ 
+#signup label
+    {
+    width: 150px;
+    display: inline-block;
+    vertical-align: top;
+    }
+ 
+legend
+    {
+    color:#00C492;
+    }
+ 
+#signup fieldset input,#signup fieldset select
+    {
+    background: #fff url(ico_validation.png) 260px 24px no-repeat;
+    display: inline-block;
+    width: 250px;
+    border: 1px solid #00C492;
+    padding: 3px 26px 3px 3px;
+    -moz-transition: background-color 1s ease;
+    -webkit-transition: background-color 1s ease;
+    -o-transition: background-color 1s ease;
+    transition: background-color 1s ease;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+ 
+#signup fieldset textarea
+    {
+    display: inline-block;
+    width: 250px;
+    border: 1px solid #00C492;
+    padding: 3px 26px 3px 3px;
+    -moz-transition: background-color 1s ease;
+    -webkit-transition: background-color 1s ease;
+    -o-transition: background-color 1s ease;
+    transition: background-color 1s ease;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    resize:none;
+    }
+ 
+#signup fieldset input[type="checkbox"]
+    {
+    width:20px;
+    }
+ 
+#signup fieldset input[type="radio"]
+    {
+    width:20px;
+    }
+ 
+#signup fieldset select
+    {
+    width: 280px;
+    padding: 3px;
+    }
+ 
+#signup fieldset #postcode
+    {
+    padding: 3px;
+    width: 270px;
+    }
+ 
+#signup input::-webkit-input-placeholder,#signup input:-moz-placeholder input:placeholder
+    {
+    color: #f2f2f2;
+    }
+ 
+#signup .validation01
+    {
+    background: #F08080;
+    color: #fff;
+    display: none;
+    font-size: 12px;
+    padding: 3px;
+    position: absolute;
+    right: -160px;
+    text-align: center;
+    top: 0;
+    width: 150px;
+    outline: 0;
+    -moz-box-shadow: 0px 0px 4px #ffffff;
+    -webkit-box-shadow: 0px 0px 4px #ffffff;
+    box-shadow: 0px 0px 4px #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+ 
+#signup input:focus + .validation01
+    {
+    display: block;
+    }
+ 
+#signup input:focus:required:invalid + .validation01 .valid,#signup input.error:focus + .validation01 .valid,#signup input.required:focus + .validation01 .valid,#signup input:focus + .validation01 .valid
+    {
+    display: none;
+    }
+ 
+#signup input:focus:required:valid + .validation01,#signup input.valid:focus + .validation01
+    {
+    background: green;
+    }
+ 
+#signup input:focus:required:valid + .validation01 .invalid,#signup input.valid:focus + .validation01 .invalid
+    {
+    display: none;
+    }
+ 
+#signup input:focus:required:valid + .validation01 .valid,#signup input.valid:focus + .validation01 .valid
+    {
+    display: block;
+    }
+ 
+#signup fieldset input:required:valid
+    {
+    background-color: #fff;
+    background-position: 260px -61px;
+    }
+ 
+#signup input.error
+    {
+    background-color: #F08080;
+    background-position: 260px 3px;
+    outline: none;
+    }
+ 
+#signup input.required
+    {
+    background-color: #fff;
+    background-position: 260px -30px;
+    }
+ 
+#signup input.valid
+    {
+    background-color: #fff;
+    background-position: 260px -61px;
+    }
+ 
+#signup input.error::-webkit-input-placeholder,#signup inputerror :-moz-placeholder
+    {
+    color: #f2f2f2;
+    }
+ 
+input[type="submit"]
+    {
+    background: #00C492;
+    border:none;
+    width:200px;
+    margin:auto;
+    float:right;
+    padding:5px;
+    border-radius:5px;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    }
+/*---------------END REGISTRATION FORM-----------------*/
