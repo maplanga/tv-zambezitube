@@ -114,4 +114,13 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+	<gap:config-file platform="ios" parent="NSPhotoLibraryUsageDescription" overwrite="true">
+   		<string>This app requires access to the photo library.</string>
+	</gap:config-file>
+	<gap:config-file platform="ios" parent="NSMicrophoneUsageDescription" overwrite="true">
+   		<string>This app does not require access to the microphone.</string>
+	</gap:config-file>
+	<gap:config-file platform="ios" parent="NSCameraUsageDescription" overwrite="true">
+   		<string>This app requires access to the camera.</string>
+	</gap:config-file>
 </widget>
