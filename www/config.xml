@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="zambezitube.tv" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="zambezitube.tv" version="2.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>ZambeziTube</name>
     <description>
         ZambeziTube gives you front-row access to thrilling fishing videos, adventure experiences and wildlife encounters from Zimbabwe, Zambia, Namibia and Mozambique.
