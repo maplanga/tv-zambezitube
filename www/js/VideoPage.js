@@ -70,6 +70,8 @@ var VideoPage = function(store) {
 	
 	var src = 'http://www.zambezitube.tv/videos/'+localStorage.mainvideo;
 	var media = new Media(src);
+	// Play audio
+    media.play();
 	
 	//localStorage.maintitle = titlemain;
 	document.getElementById("vidlist").innerHTML = mainvideo;
