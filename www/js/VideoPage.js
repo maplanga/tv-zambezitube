@@ -66,7 +66,11 @@ var VideoPage = function(store) {
 
 	var maintitle  = dataresult[1];
 	var mainvideo="";
-				mainvideo += '<div data-role="page" id="login-form"><div class="container-fluid" style="margin-top:20px;"><div class="row " id="vidlist"><div class="col-xs-12"><ul style="list-style:none; text-align:center; padding:0px;"><li class="vidheading" id="vidtitle">'+maintitle+'</li><li class="vidthumb"><div id="videoholder"><video width="100%" height="auto" controls><source src="http://www.zambezitube.tv/videos/'+localStorage.mainvideo+'" type="video/mp4"></video></div></li></ul></div></div></div></div>';
+				mainvideo += '<div data-role="page" id="login-form"><div class="container-fluid" style="margin-top:20px;"><div class="row " id="vidlist"><div class="col-xs-12"><ul style="list-style:none; text-align:center; padding:0px;"><li class="vidheading" id="vidtitle">'+maintitle+'</li><li class="vidthumb"><div id="videoholder"></div></li></ul></div></div></div></div>';
+	
+	var src = 'http://www.zambezitube.tv/videos/'+localStorage.mainvideo;
+	var media = new Media(src);
+	
 	//localStorage.maintitle = titlemain;
 	document.getElementById("vidlist").innerHTML = mainvideo;
 }
