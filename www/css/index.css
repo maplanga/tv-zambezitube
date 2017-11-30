@@ -1,20 +1,225 @@
-.fa
+/*
+  We include some minimal custom CSS to make the playlist UI look good
+  in this context.
+*/
+.readmore
 {
-	font-size:60px;
+	margin-bottom:10px;
+}
+.videoicomenu {
+    border: 1px solid #ffffff;
+    color: #fffffff;
+}
+.popover-inner .content-block
+{
+	margin-top:0px;
+}
+.popover-inner .vid-heading
+{
+	color:#000;
+}
+.popover-inner .vid-content
+{
+	color:#000;	/* Required for text-overflow to do anything */
+	white-space:normal;
+	word-wrap: break-word;
+	overflow:visible;
+}
+.videoicomenu a {
+    color: #fffffff;
+}
+.list-block ul {
+	background-color:transparent;
+}
+.list-block .item-title.label {
+    width: 70%;
+}
+.item-title
+{
+	color:#FFF;
+	font-weight:bold;
+}
+.dark-background
+{
+	background-color:#111;
+}
+.vid-content
+{
+	color:#fff;
+	text-align:left;
+	padding:10px 0px;
+	text-overflow: ellipsis;
+
+	/* Required for text-overflow to do anything */
+	white-space:nowrap;
+	overflow: hidden;
 }
 
+.vid-heading
+{
+	text-align:left;
+	color:#f0f0f0;
+	font-weight:bold;
+	padding-top:10px;
+	text-transform:uppercase;
+}
+.player-container {
+  background: #1a1a1a;
+}
+.video-js {
+}
+.vjs-playlist {
+	height:525px;
+}
+.fa
+{
+	font-size:30px;
+}
+.button-red
+{
+	background-color:#F00;
+	border:#FFF;
+	color:#FFF;
+}
+#mainmenu
+{
+	background-color:#000;
+	border:none;
+	color:#FFF;
+}
+.text-light
+{
+	color:#666;
+}
+.text-light.active-state
+{
+	color:#FFF;
+}
+.toolbar {
+
+	height:70px;
+	background:#111;
+
+}
+
+.toolbar-inner
+{
+	top:20px;
+	padding:0 20px;
+}
+.toolbar a{
+ margin-bottom:20px;
+}
+
+.button-with-icon{
+    text-align: center;
+    display: table;
+}
+
+
+.button-with-icon .button-content {
+    display: table-cell;
+    vertical-align: middle;
+}
+.button-content.active-state {
+	padding-bottom:15px;
+}
+.button-with-icon .button-content span {
+    display: block;
+	opacity:0;
+}
+.left-panel-menu
+{
+	list-style:none;
+	color:#FFF;
+}
+.panel {
+	background-color:#000;
+}
+
+.overlay {
+  position: relative;
+}
+
+.overlay:after {
+  position: absolute;
+  content:"";
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+}
+.overlay-black
+{
+	background-image:url(../img/main_background.jpg);
+	background-size:cover;
+	opacity:0.2;
+	z-index:-10;
+}
+.left-panel-menu li
+{
+	height:40px;
+	padding:10px 0px;
+	font-size:16px;
+}
+.popup-terms p
+{
+	color:#000;
+	text-align:center;
+}
+.popup-terms h1
+{
+	color:#000;
+}
+.content-block {
+    margin-top: 80px;
+}
+.navbar, .toolbar
+{
+	height:100px;
+}
+.back-button a{
+	color:#000;
+}
+.navbar-inner
+{
+/*	background-image:url(../img/header.jpg);
+*/	background-size:cover;
+	background-repeat: no-repeat;
+}
+.left-panel-button
+{
+	color:#FFF;
+	text-transform:uppercase;
+}
 #nav
 {
 	background-color:#e2e2e2;
 	padding:10px;
 }
-
+.playlist-background
+{
+	padding-top:10px;
+	height:250px;
+	background-color:#000;
+	text-align:center;
+}
+.vjs-playlist .vjs-playlist-thumbnail {
+}
+.main-background
+{
+	background-image:url(../img/login_background.jpg);
+	background-position:center;
+	background-size:cover;
+	margin:auto 0;
+}
 #login-body
 {
 	background-image:url(../img/login_background.jpg);
+	background-position:center;
+	background-size:cover;
 	margin:auto 0;
-	padding-top:20px;
-	padding-bottom:10%;
 }
 #pp-body
 {
@@ -33,12 +238,16 @@
 .policy-content h1
 {
 	color:#000000;
+		text-align:center;
+
 }
 .policy-content h2
 {
 	color:#000000;
 	font-weight:bold;
 	text-decoration:underline;
+		text-align:center;
+
 }
 #main-body
 {
@@ -77,19 +286,21 @@ body, form, ul, li, p, h2, h3, h4, h5
 h1
 {
 	color:#FFF;
-	font-weight:bold;
 }
 h2
 {
 	color:#FFF;
-	font-size:small;
 	text-transform:uppercase;
-	padding:10px;
+	padding-bottom:20px;
+}
+h3
+{
+	color:#FFF;
+	text-transform:uppercase;
 }
 p
 {
 	color:#FFF;
-	font-size:small;
 }
 #vidtitle
 {
@@ -430,3 +641,9 @@ input[type="submit"]
     cursor:pointer;
     }
 /*---------------END REGISTRATION FORM-----------------*/
+
+.no-margin
+{
+	margin:0px;
+	padding:0px;
+}
