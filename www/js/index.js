@@ -57,9 +57,26 @@ var mainView = myApp.addView('.view-main', {
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
 	
-    console.log("Device is ready!");
+    console.log("Device is ready!");	
 });
 
+function checkConnection() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.CELL]     = 'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    myApp.alert('Connection type: ' + states[networkState]);
+}
+
+checkConnection();
 
 // Now we need to run the code that will be executed only for About page.
 
@@ -580,6 +597,8 @@ function thankYou()
 {
 	mainView.router.loadContent($('#thankyou-tpl').html());
 }
+
+myApp.popup('.popup-terms');
 
 /*$$('.form-to-data').on('click', function(){
 
