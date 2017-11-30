@@ -1,71 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com data: https://fonts.gstatic.com; font-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com data: https://fonts.gstatic.com ; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/framework7-icons.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link href="css/video-js.css" rel="stylesheet">
+  	<link href="css/videojs-playlist-ui.css" rel="stylesheet">
+    
     <title>ZambeziTube | Fishing Safari Adventure</title>
 </head>
 <body>
-<div class="container-fluid text-center" id="top-header">
-    <div class="img-responsive"><img src="img/header.jpg" width="100%" height="auto"></div>
-</div>
-<div class="container-fluid text-center" id="pp-body">
-	<div class="policy-content"></div>
-</div>
-<div class="container-fluid text-right" id="nav">
-		  <nav class="navbar navbar-inverse" id="mainnav">
-			<div class="container">
-			  <div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				  <span class="sr-only">Toggle navigation</span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" style="text-align:center;" href="#"></a>
-			  </div>
-			  <div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav" id="mainnav-items">
-                	<li><button id="homebtn">HOME</button></li>
-                    <li><button id="logbtn">LOGIN</button></li>
-                    <li><button id="regbtn">REGISTER PROFILE</button></li>
-                    <li><button id="vidmnu">VIDEO MENU</button></li>
-				</ul>
-			  </div><!--/.nav-collapse -->
-			</div>
-		  </nav>
-          <div class="row">
-            <div class="col-xs-4"><div  class="img-responsive" style="">
-            <button id="logoutbtn"><img src="img/logout.png" width="100%" height="auto"  style="max-width:93px;"></button></div></div>
-            <div class="col-xs-4"><div  class="img-responsive" style="vertical-align:text-bottom;">
-            <button id="uploadbtn" ><img src="img/uploadicon.png" width="100%" height="auto" style="max-width:93px;"></button></div></div>
-            <div class="col-xs-4"><div  class="img-responsive"><button id="exitbtn" ><img src="img/exit button.png" width="100%" height="auto" style="max-width:93px;"></button></div></div>
-		</div>
-</div>
-<div class="container-fluid text-center" id="login-body">
-    <div class="main-content">
+    <!-- Status bar overlay for full screen mode (PhoneGap) -->
+    <div class="statusbar-overlay"></div>
 
-  </div>
-    <footer class="container-fluid" style=" color:#ffffff; font-size:12px;">Copyright TigerFishingZambezi<sup>TM</sup> zambezitube.tv is owned & operated by TigerFishingZambezi.com </footer>
-</div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal ">
+        <div class="content-block">
+        	<!-- Toolbar links -->
+            <div class="col-100"><img class="img-responsive" src="img/logo.png"></div>
+            <ul class="left-panel-menu">
+            	<li><a href="#" class="left-panel-button" data-template="home-tpl">HOME</a></li>
+                <li><a href="#" class="left-panel-button" data-template="login-tpl">LOGIN</a></li>
+                <li><a href="#" class="left-panel-button" data-template="signup-tpl">REGISTER A PROFILE</a></li>
+                <li><a href="#" class="left-panel-button" data-template="videosmain-tpl">WATCH SOME VIDEOS</a></li>
+                <li><a href="#" class="left-panel-button" id="exitbtn">EXIT THE APP</a></li>
+            </ul>
+        </div>
+      <div class="overlay-black panel panel-left"></div>
+    </div>
+
+     <!-- Right panel, with cover effect -->
+    <div class="panel panel-right panel-cover">
+		<div class="content-block">
+        	<div class="list-block">
+              <ul>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title">PLAYLIST</div>
+                      </div>
+                    </div>
+                  </li>
+              </ul>
+            </div>
+            <div class="vjs-playlist"></div>
+        </div>        
+    </div>
+    <!-- read more popover -->
+    <div class="popover popover-about">
+      <div class="popover-angle"></div>
+      <div class="popover-inner">
+        <div class="content-block">
+          <p class="vid-heading"></p>
+          <p class="vid-content readmore"></p>
+        </div>
+      </div>
+    </div>
+    
+<div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="navbar">
+              <div class="navbar-inner">
+                    <div class="left">
+                </div>
+                    <div class="right">
+                        <a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+                    </div>
+                </div>
+                <div class="col-100"><img class="img-responsive" src="img/header.jpg"></div>
+            </div>
+                        <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, "data-page" contains page name -->
+                <div data-page="login-tpl" class="page main-background" id="login-tpl">
+                    <!-- Scrollable page content -->
+                    <div class="page-content">
+                        <div class="content-block">
+                          <img src="img/welcome.png" width="100%" height="auto" style="max-width:839px; padding:0px; margin:0px;">	
+                          <h2 class="text-center"  style="font-size:small; line-height:1.1;"><span>ZAMBEZITUBE SHOWCASES FISHING AND ADVENTURE SAFARI VIDEOS FROM ALL OVER THE ZAMEBEZI</span></h2>
+                            <div class="row form-group">
+                                <div class="col-xs-12 text-right">
+                            		<a href="#" class="button button-big button-fill login-button" id="main-login">LOGIN</a>
+                                </div>
+                                <div class="col-xs-12 text-center"><p><strong>OR</strong></p></div>
+                                <div class="col-xs-12">
+                                	<a href="#" class="button button-big button-fill" data-template="signup-tpl" id="profile-button">CREATE YOUR PROFILE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <a href="#" class="bottom-button"  data-template="home-tpl"><div class="button-with-icon"><div class="button-content active-state" id="home"><i class="f7-icons size-25 text-light active-state">home_fill</i><span class="text-light active-state" style="opacity:1;">Featured</span></div></div></a>
+                    <a href="#" class="bottom-button"  data-template="upload-tpl"><div class="button-with-icon"><div class="button-content" id="upload"><i class="f7-icons size-25 text-light">cloud_upload_fill</i><span class="text-light">Upload</span></div></div></a>
+                    <a href="#" class="bottom-button"  data-template="login-tpl"><div class="button-with-icon"><div class="button-content" id="login"><i class="f7-icons size-25 text-light">login_fill</i><span class="text-light">Login</span></div></div></a>
+                    <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="register"><i class="f7-icons size-25 text-light">person_fill</i><span class="text-light">Register</span></div></div></a>
+                    <a href="#" class="bottom-button" data-template="videosmain-tpl"><div class="button-with-icon"><div class="button-content" id="videos" ><i class="f7-icons size-25 text-light">videocam_fill</i><span class="text-light">Videos</span></div></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
 <!--PRIVACY POLICY-->
-<script id="pp-tpl" type="text/x-handlebars-template">
-<div class="container">
+  <div class="popup popup-terms">
+    <div class="content-block">
+<div class="container policy-content">
 <h1>ZambeziTube.tv Privacy Policy</h1>
 
 <p>Last updated: October 10, 2017</p>
@@ -126,159 +192,338 @@
 <p>If you have any questions about this Privacy Policy, please contact us. <a href="mailto:info@zambezitube.tv">info@zambezitube.tv</a></p>
 
 <p>click the button below to accept our privacy policy agreement</p>
-<button class="red-btn" id="pp-btn" onClick="acceptPP()" >I ACCEPT THE PRIVATE POLICY AGREEMENT</button>
+<a href="#" class="button button-big button-red close-popup">I ACCEPT THE PRIVACY POLICY</a>
 </div>
+    </div>
+  </div>
 </script>
-	<script id="home-tpl" type="text/x-handlebars-template">
-	  <div class="container-fluid text-center" id="login-form">
-	    <img src="img/welcome.png" width="100%" height="auto" style="max-width:839px; padding:0px; margin:0px;">	
-        <h2>ZAMBEZITUBE SHOWCASES FISHING AND ADVENTURE SAFARI VIDEOS FROM ALL OVER THE ZAMEBEZI</h2>
-		  <div class="row form-group text-center">
-			  <div class="col-xs-12">
-				  <input name="username" type="text" id="username" class="form-control" value="" placeholder="USERNAME" required>
-			  </div>
-		  </div>
-		  <div class="row form-group">
-			  <div class="col-xs-12">
-				  <input name="password" type="password" id="password" class="form-control" value="" placeholder="PASSWORD" required>
-			  </div>
-		  </div>
-	 </div>
-  <!--1. LOGIN PAGE-->
-		  <div class="container-fluid text-center" id="login-form">
+<script id="login-tpl" type="text/template7">
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages navbar-through toolbar-through">
+    <div data-page="login-tpl" class="page main-background" id="login-tpl">
+        <div class="page-content">
+            <div class="content-block">
+           		<img src="img/welcome.png" width="100%" height="auto" style="max-width:839px; padding:0px; margin:0px;">	
+				<h2 class="text-center"  style="font-size:small; line-height:1.1;"><span>ZAMBEZITUBE SHOWCASES FISHING AND ADVENTURE SAFARI VIDEOS FROM ALL OVER THE ZAMEBEZI</span></h2>
 				<div class="row form-group">
 					<div class="col-xs-12">
-				<button name="buttonClick" onclick="loginUser()" class="img-button" style="padding:0px; margin:0px; border:none;"><img src="img/login.jpg" width="100%" height="auto" style="max-width:1280px; padding:0px; margin:0px;"></button>
+						<a href="#" class="button button-big button-fill login-button" id="inner-login">LOGIN</a>
 					</div>
-					<div class="col-xs-12"><label><span style="color:#ffffff;">OR</span></label></div>
+					<div class="col-xs-12 text-center"><p><strong>OR</strong></p></div>
 					<div class="col-xs-12">
-					  <button name="buttonClick" onclick="callSignUpPage()" style="padding:0px; margin:0px; border:none;"><img src="img/create-profile.jpg" width="100%" height="auto" style="max-width:1280px;"></button>
+						<a href="#" class="button button-big button-fill" data-template="signup-tpl">CREATE YOUR PROFILE</a>
 					</div>
-				</div>
-		   </div>
-	  </div>
-	  <!--END OF 1.LOGIN PAGE-->
+				</div>     
+            </div>
+        </div>
+	</div>
+</div>
+</script> 
+<script id="home-tpl" type="text/template7">
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+                        <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, "data-page" contains page name -->
+                <div data-page="home-tpl" class="page main-background" id="home-tpl">
+                    <!-- Scrollable page content -->
+                    <div class="page-content">
+                        <div class="content-block">
+                          <img src="img/welcome.png" width="100%" height="auto" style="max-width:839px; padding:0px; margin:0px;">	
+                          <h2 class="text-center"  style="font-size:small; line-height:1.1;"><span>ZAMBEZITUBE SHOWCASES FISHING AND ADVENTURE SAFARI VIDEOS FROM ALL OVER THE ZAMEBEZI</span></h2>
+                            <div class="row form-group">
+                                <div class="col-xs-12">
+                            		<a href="#" class="button button-big button-fill" id="home-login">LOGIN</a>
+                                </div>
+                                <div class="col-xs-12 text-center"><p><strong>OR</strong></p></div>
+                                <div class="col-xs-12">
+                                	<a href="#" class="button button-big button-fill">CREATE YOUR PROFILE</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content active-state" id="home"><i class="f7-icons size-25 text-light active-state">home_fill</i><span class="text-light active-state" style="opacity:1;">Featured</span></div></div></a>
+                    <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="login"><i class="f7-icons size-25 text-light">login</i><span class="text-light">Login</span></div></div></a>
+                    <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="register"><i class="f7-icons size-25 text-light">person_fill</i><span class="text-light">Register</span></div></div></a>
+                    <a href="#" class="bottom-button" data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="videos" ><i class="f7-icons size-25 text-light">videocam_fill</i><span class="text-light">Videos</span></div></div></a>
+                </div>
+            </div>
     </script> 
-    <script id="thanksvid-tpl" type="text/x-handlebars-template">
+    <script id="thanksvid-tpl" type="text/template7">
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+<div class="pages navbar-through toolbar-through">
+    <!-- Page, "data-page" contains page name -->
+    <div data-page="thanksvid-tpl" class="page main-background" id="thanksvid-tpl">
+        <!-- Scrollable page content -->
+        <div class="page-content">
+            <div class="content-block">
+				<h1 style="text-align:center;">Your Video Has Been Published!</h1>			
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <a href="#" class="button button-big button-fill" data-template="videosmain-tpl">JUMP STRAIGHT INTO VIDEOS</a>
+                    </div>
+                    <div class="col-xs-12 text-center"><p><strong>OR</strong></p></div>
+                    <div class="col-xs-12">
+                        <a href="#" class="button button-big button-fill" data-template="upload-tpl">UPLOAD ANOTHER VIDEO!</a>
+                    </div>
+                </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bottom Toolbar-->
+<div class="toolbar">
+    <div class="toolbar-inner">
+        <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content active-state" id="home"><i class="f7-icons size-25 text-light active-state">home_fill</i><span class="text-light active-state" style="opacity:1;">Featured</span></div></div></a>
+        <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="login"><i class="f7-icons size-25 text-light">login</i><span class="text-light">Login</span></div></div></a>
+        <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="register"><i class="f7-icons size-25 text-light">person_fill</i><span class="text-light">Register</span></div></div></a>
+        <a href="#" class="bottom-button" data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="videos" ><i class="f7-icons size-25 text-light">videocam_fill</i><span class="text-light">Videos</span></div></div></a>
+    </div>
+</div>
+    </script>
+    <script id="thankyou-tpl" type="text/template7">
      <!--AFTER LOGIN PAGE-->
-		<div class="container-fluid text-center" id="thanksvid-body">
-		  <h1>Your Video Has Been Published!</h1>
-		  <button class="blue-btn" name="buttonClick" onclick="uploadVideo()" class="img-button">UPLOAD ANOTHER VIDEO</button>
-		  <button class="blue-btn" id="thanks-uploadbtn" name="buttonClick" onclick="launchVideos()" class="img-button">WATCH MORE VIDEOS</button>
-		 </div>
-	  </div>
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+            <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+<div class="pages navbar-through toolbar-through">
+    <!-- Page, "data-page" contains page name -->
+    <div data-page="home-tpl" class="page main-background" id="home-tpl">
+        <!-- Scrollable page content -->
+        <div class="page-content">
+            <div class="content-block">
+				<img src="img/welcome.png" width="100%" height="auto" style="max-width:839px; padding:0px; margin:0px;">
+                <p>ZambeziTube showcases fishing and adventure safari videos from us, our suppliers and <strong>YOU!</strong></p>
+                <p>Jump straight into some videos or upload one of your own!</p>				
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <a href="#" class="button button-big button-fill" data-template="videosmain-tpl">JUMP STRAIGHT INTO VIDEOS</a>
+                    </div>
+                    <div class="col-xs-12 text-center"><p><strong>OR</strong></p></div>
+                    <div class="col-xs-12">
+                        <a href="#" class="button button-big button-fill" data-template="upload-tpl">UPLOAD YOUR OWN!</a>
+                    </div>
+                </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bottom Toolbar-->
+<div class="toolbar">
+    <div class="toolbar-inner">
+        <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content active-state" id="home"><i class="f7-icons size-25 text-light active-state">home_fill</i><span class="text-light active-state" style="opacity:1;">Featured</span></div></div></a>
+        <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="login"><i class="f7-icons size-25 text-light">login</i><span class="text-light">Login</span></div></div></a>
+        <a href="#" class="bottom-button"  data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="register"><i class="f7-icons size-25 text-light">person_fill</i><span class="text-light">Register</span></div></div></a>
+        <a href="#" class="bottom-button" data-template="signup-tpl"><div class="button-with-icon"><div class="button-content" id="videos" ><i class="f7-icons size-25 text-light">videocam_fill</i><span class="text-light">Videos</span></div></div></a>
+    </div>
+</div>
 	  <!--AFTER LOGIN PAGE-->
     </script>
-    <script id="thanks-tpl" type="text/x-handlebars-template">
-     <!--AFTER LOGIN PAGE-->
-		<div class="container-fluid text-center" id="thanks-body">
-		  <img src="img/welcome.png" width="100%" height="auto" style="max-width:839px; padding:0px; margin:0px;">
-		  <p>ZambeziTube showcases fishing and adventure safari videos from us, our suppliers and <strong>YOU!</strong></p>
-		  <p>Jump straight into some videos or upload one of your own!</p>
-		  <button class="blue-btn" name="buttonClick" onclick="launchVideos()" class="img-button" style="padding:0px; margin:10px; border:none;"><img src="img/open-videos.jpg" width="100%" height="auto" style="max-width:1280px; padding:0px; margin:0px;"></button>
-		  <button class="blue-btn" id="thanks-uploadbtn" name="buttonClick" onclick="uploadVideo()" class="img-button" style="padding:0px; margin:10px; border:none;"><img src="img/upload_videos.jpg" width="100%" height="auto" style="max-width:1280px; padding:0px; margin:0px;"></button>
-		 </div>
-	  </div>
-	  <!--AFTER LOGIN PAGE-->
-    </script>
-    <script id="signup-tpl" type="text/x-handlebars-template">
-			<div class="container-fluid text-left" id="signup-form">
-			  <div class="row form-group">
-				  <div class="col-xs-12">
-					  <label class="form-labels">1. NAME AND SURNAME</label>
-					  <input name="email" type="text" id="fullname" class="form-control" value="" placeholder="NAME AND SURNAME" required>
-				  </div>
-			  </div>
-			  <div class="row form-group">
-				  <div class="col-xs-12">
-					  <label class="form-labels">2. USERNAME</label>
-					  <input name="password" type="text" id="username" class="form-control" value="" placeholder="USERNAME" required>
-				  </div>
-			  </div>
-			  <div class="row form-group">
-				  <div class="col-xs-12">
-					  <label class="form-labels">3. EMAIL</label>
-					  <input name="password" type="email" id="email" class="form-control" value="" placeholder="EMAIL" required>
-				  </div>
-			  </div>
-			  <div class="row form-group">
-				  <div class="col-xs-12">
-					  <label class="form-labels">4. PASSWORD</label>
-					  <input name="password" type="password" id="password" class="form-control" value="" placeholder="PASSWORD" required>
-				  </div>
-			  </div>
-			  <div class="row form-group text-center">
-				  <div class="col-xs-12">
-					  <button class="red-btn" id="signup" onClick="registerProfile()" >REGISTER MY PROFILE</button>
-				  </div>
-			  </div>
-		 </div>
+    <script id="signup-tpl" type="text/template7">
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages navbar-through toolbar-through">
+    <div data-page="signup-tpl" class="page main-background" id="signup-tpl">
+        <div class="page-content">
+            <div class="content-block">
+            	<div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">1. NAME AND SURNAME</label>
+                        <input name="email" type="text" id="fullname" class="form-control" value="" placeholder="NAME AND SURNAME" required>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">2. USERNAME</label>
+                        <input name="password" type="text" id="username" class="form-control" value="" placeholder="USERNAME" required>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">3. EMAIL</label>
+                        <input name="password" type="email" id="email" class="form-control" value="" placeholder="EMAIL" required>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">4. PASSWORD</label>
+                        <input name="password" type="password" id="password" class="form-control" value="" placeholder="PASSWORD" required>
+                    </div>
+                </div>
+                <div class="row form-group text-center">
+                    <div class="col-xs-12">
+                        <a href="#" class="button button-big button-red" id="register-button">REGISTER MY PROFILE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
 	</script>
-    <script id="videosmain-tpl" type="text/x-handlebars-template">
-		  <nav class="navbar navbar-inverse" id="videomenu" style="display:none;">
-			<div class="container">
-			  <div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#video-navbar" aria-expanded="false" aria-controls="video-navbar">
-				  <span class="sr-only">Toggle navigation</span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				  <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" style="text-align:center;" href="#">MAIN MENU</a>
-			  </div>
-			  <div id="video-navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav" id="videomm">
-				</ul>
-			  </div><!--/.nav-collapse -->
-			</div>
-		  </nav>
-		  <div class="row" id="vidlist">
-			  </div>  
-		  </div>
-	</script>
-   	<script id="upload-tpl" type="text/x-handlebars-template">	
-		<div class="container-fluid text-left" id="login-form">
-            <div class="row form-group">
-                <div class="col-xs-12">
-                    <label class="form-labels">1. VIDEO TITLE</label>
-                    <input name="email" type="text" id="videotitle" class="form-control" value="" placeholder="VIDEO TITLE" required>
-                </div>
+    <script id="videosmain-tpl" type="text/template7">
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages navbar-through toolbar-through">
+    <div data-page="videosmain-tpl" class="page dark-background" id="videosmain-tpl">
+        <div class="page-content  hide-bars-on-scroll">
+            <div class="content-block">
+				<div class="row">
+        			<div class="col-90"><video id="video" class="video-js" controls data-setup='{"fluid": true}' ></video></div>
+      			</div>
+				<div class="row">
+        			<div class="col-90">
+						<div class="content-block no-margin"><h4 class="vid-heading"></h4>
+						<p class="vid-content"></p><a href="#" data-popover=".popover-about" class="button button-fill color-indigo open-popover text-right readmore">read more</a></div>
+					</div>
+      			</div>
+				<div class="row">
+        			<div class="col-90">
+						<a href="#" data-panel="right" class=" open-panel button button-big button-fill button-raised color-blue">MORE VIDEOS</a>
+					</div>
+      			</div> 
             </div>
-            <div class="row form-group">
-                <div class="col-xs-12">
-                    <label class="form-labels">2. DESCRIPTION</label>
-                    <input name="password" type="text" id="videodesc" class="form-control" value="" placeholder="DESCRIPTION" required>
+        </div>
+	</div>
+</div>
+</script>
+   	<script id="upload-tpl" type="text/template7">	
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
+        <div class="left sliding" style="padding-left:20px;">
+			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+        </div> 
+        <!-- Right part doesn't related to other pages -->
+        <div class="right">
+			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
+        </div>
+    </div>
+</div>
+<div class="pages navbar-through toolbar-through">
+    <div data-page="upload-tpl" class="page main-background" id="upload-tpl">
+        <div class="page-content">
+            <div class="content-block">
+            	<div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">1. VIDEO TITLE</label>
+                        <input name="email" type="text" id="videotitle" class="form-control" value="" placeholder="VIDEO TITLE" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-xs-12">
-                    <label class="form-labels">3. UPLOAD A THUMBNAIL IMAGE</label>
-                    <input name="imageToUpload" type="file" id="imageToUpload" class="form-control" value="" required>
-					<button class="red-btn" id="upload-img" onclick="sendImage()">UPLOAD IMAGE</button>
-										<div id="imgcont" class="w3-progress-container" style="display:none">
-                            <div id="imgprog" class="w3-progressbar w3-green">
-                              <div id="imgper" class="percent w3-center w3-text-white"></div>
-                            </div>
-                          </div>
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">2. DESCRIPTION</label>
+                        <input name="password" type="text" id="videodesc" class="form-control" value="" placeholder="DESCRIPTION" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-xs-12">
-                    <label class="form-labels">5. UPLOAD YOUR VIDEO</label>
-					<input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
-					<button class="red-btn" id="upload-vid" onclick="sendVideo()">UPLOAD VIDEO</button>
-					<div id="vidcont" class="w3-progress-container" style="display:none">
-                            <div id="vidprog" class="w3-progressbar w3-green">
-                              <div id="vidper" class="percent w3-center w3-text-white"></div>
-                            </div>
-                          </div>
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">3. UPLOAD A THUMBNAIL IMAGE</label>
+                        <input name="imageToUpload" type="file" id="imageToUpload" class="form-control" value="" required>
+                        <button class="red-btn" id="upload-img" onclick="sendImage()">UPLOAD IMAGE</button>
+                                            <div id="imgcont" class="w3-progress-container" style="display:none">
+                                <div id="imgprog" class="w3-progressbar w3-green">
+                                  <div id="imgper" class="percent w3-center w3-text-white"></div>
+                                </div>
+                              </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row form-group text-center">
-                <div class="col-xs-12" id="pubbtn">
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <label class="form-labels">5. UPLOAD YOUR VIDEO</label>
+                        <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
+                        <button class="red-btn" id="upload-vid" onclick="sendVideo()">UPLOAD VIDEO</button>
+                        <div id="vidcont" class="w3-progress-container" style="display:none">
+                                <div id="vidprog" class="w3-progressbar w3-green">
+                                  <div id="vidper" class="percent w3-center w3-text-white"></div>
+                                </div>
+                              </div>
+                    </div>
                 </div>
+                <div class="row form-group text-center">
+                    <div class="col-xs-12" id="pubbtn">
+                    </div>
+                </div>            
             </div>
-       </div>
+        </div>
+	</div>
+</div>
     </script>
     <!--LOAD SCRIPTS-->
     <script src="phonegap.js"></script>
@@ -286,18 +531,14 @@
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/memory-store.js"></script>
-    <script type="text/javascript" src="js/handlebars.js"></script>  
-    <script type="text/javascript" src="js/ThanksVideo.js"></script>
-    <script type="text/javascript" src="js/ThanksPage.js"></script>
-    <script type="text/javascript" src="js/SignUp.js"></script>
-    <script type="text/javascript" src="js/UploadVideo.js"></script>
-    <script type="text/javascript" src="js/VideoPage.js"></script>
-    <script type="text/javascript" src="js/HomeView.js"></script>
-    <script type="text/javascript" src="js/PrivacyPolicy.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
+  	<script type="text/javascript" src="js/video.js"></script>
+  	<script type="text/javascript" src="js/videojs-playlist.js"></script>
+  	<script type="text/javascript" src="js/videojs-playlist-ui.js"></script>
+  	<script type="text/javascript" src="js/videojs-responsive-layout.js"></script>
+    <script type="text/javascript" src="js/SocialSharing.js"></script>
+
 </body>
 
 </html>
