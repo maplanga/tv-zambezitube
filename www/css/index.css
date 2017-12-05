@@ -111,18 +111,18 @@
 }
 .toolbar {
 
-	height:70px;
 	background:#111;
 
 }
 
-.toolbar-inner
+/*.toolbar-inner
 {
 	top:20px;
 	padding:0 20px;
-}
+}*/
 .toolbar a{
- margin-bottom:20px;
+	padding-top:20px;
+ 	padding-bottom:20px;
 }
 
 .button-with-icon{
@@ -189,10 +189,10 @@
 .content-block {
     margin-top: 80px;
 }
-.navbar, .toolbar
+/*.navbar, .toolbar
 {
 	height:100px;
-}
+}*/
 .back-button a{
 	color:#000;
 }
@@ -691,4 +691,11 @@ a
 a:hover, a:focus {
     color: #007aff;
     text-decoration: none;
+}
+.tabbar a:hover, a:focus {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.tabbar a.active {
+    color: #FFFFFF;
 }
