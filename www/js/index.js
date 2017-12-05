@@ -23,27 +23,16 @@ var myApp = new Framework7({
 	animateNavBackIcon: true,
     precompileTemplates: true, //
     template7Pages: true, //enable Template7 rendering for pages
+	reloadPages: true
 	
 })
 
-/*
-LOAD PAGE FROM JAVASCRIPT
-//To load contacts page from template:
-mainView.router.load({
-    template: Template7.templates.contactsTemplate // template already compiled and available as a property of Template7.templates
-})
- 
-//To load about page from template with custom data:
-mainView.router.load({
-    template: Template7.templates.aboutTemplate, // template already compiled and available as a property of Template7.templates
-    context: {
-        name: 'John Doe',
-        age: 35
-    }
-})
-
-*/
-
+var loggedin = false;
+var videoid;
+var videouploaded = "false";
+var imguploaded = "false";
+var player;
+var jsonArray = [];
 
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -58,22 +47,23 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
 	
     console.log("Device is ready!");	
+	//loggedin = "false";
 });
 
-function checkConnection() {
+document.addEventListener("offline", function(){ myApp.alert("An internet connection is required.") }, false);
 
-var networkstatus = 'No network connection';
-
-	if (navigator.connection.type == NONE)
-	{
-		 myApp.alert('Connection type: ' + networkstatus);
-	}
-
-}
-
-checkConnection();
-
-// Now we need to run the code that will be executed only for About page.
+<!--QUICK LIST OF FUNCTIONS-->
+/*thankYou()
+regView(videoip)
+launchVideo(vidtoplay)
+RemoveOldPlayer()
+loginUserRegistration()
+loginUser()
+UploadthankYou()
+sendVideo()
+sendImage()
+publishVideo()*/
+<!--QUICK LIST OF FUNCTIONS-->
 
 // Option 1. Using page callback for page (for "about" page in this case) (recommended way):
 myApp.onPageInit('about', function (page) {
@@ -170,12 +160,17 @@ $$(document).on('pageInit', function (e) {
 	
 	if (page.name === 'upload-tpl') {
 		
-		localStorage.videoid = Math.floor(Math.random() * 9000000000) + 1000000000;	
+		if (loggedin == false)
+		{
+			loginUserRegistration();
+		}
+		
+		videoid = Math.floor(Math.random() * 9000000000) + 1000000000;	
 		// Define a div wrapper for the view. The div wrapper is used to attach events.
 		this.el = $('<div/>');
 		var btn = document.getElementById('nxt-button');
-		localStorage.videouploaded=false;
-		localStorage.imguploaded=false;
+		videouploaded=false;
+		imguploaded=false;
 		
 		$("#pub-btn").hide();
 		
@@ -183,8 +178,7 @@ $$(document).on('pageInit', function (e) {
 	
 	    if (page.name === 'videosmain-tpl') {
 			
-
-			var jsonArray = [];
+			
 		  
 			$.ajax({
 			type: 'POST',
@@ -215,11 +209,16 @@ $$(document).on('pageInit', function (e) {
 				  
 				  
 				  );
-				console.log('I am trying to load...'+ videolink+'.mp4');
+				//console.log('I am trying to load...'+ videolink+'.mp4');
 				
 					});
+					if (player != null)
+					{
+						RemoveOldPlayer();
+					}else{
+						InitVideoPlayer(jsonArray);
+					}
 					
-					InitVideoPlayer(jsonArray);
 				}	
 				
 			})
@@ -227,6 +226,23 @@ $$(document).on('pageInit', function (e) {
 		}
 })
 
+	
+myApp.onPageReinit('upload-tpl', function(page){
+			
+		videoid = Math.floor(Math.random() * 9000000000) + 1000000000;	
+		// Define a div wrapper for the view. The div wrapper is used to attach events.
+		this.el = $('<div/>');
+		var btn = document.getElementById('nxt-button');
+		videouploaded=false;
+		imguploaded=false;
+		$("#pub-btn").hide();
+		
+		if (loggedin == false)
+		{
+			loginUserRegistration();
+		}
+	
+	});
 
 $("#main-login").click(function(){
 				  
@@ -234,14 +250,39 @@ loginUser();
 				  
 }); 
 
+/*$("#video").click(function(){
+				  
+				  console.log('I have clicked the video player in order to pause it...');
+myApp.alert('clicked...');
+				  
+}); */
 
+
+/*$( '.videobutton' ).on('touchstart', function(){
+      
+	  myApp.alert('clicked...');
+
+   });*/
 		
-
+/*$( '#video' ).on('touchstart', function(){
+	
+	 myApp.alert('clicked...');
+      if (player.userActive() === true) 
+      {
+		 myApp.alert('PAUSE'); 
+        player.userActive(false);
+      } 
+      else 
+      {
+		  myApp.alert('NO PAUSE');
+        player.userActive(true);
+      }
+   });*/
 
 function publishVideo()
 {
 		
-  var videoid = localStorage.videoid;
+  var videoid = videoid;
   var videotitle = $("#videotitle").val();
   var videofile = $("#videofile").val();
   var videoimg = $("#videoimg").val();
@@ -273,7 +314,7 @@ myApp.showPreloader();
 
 function sendImage()
 {
-	var imageid = localStorage.videoid;
+	var imageid = videoid;
 		  
 	var imageData = new FormData();
 	imageData.append('imageToUpload', $('#imageToUpload')[0].files[0]);
@@ -314,8 +355,8 @@ function sendImage()
 				   	if (data=="success")
 				   	{
 						$("#upload-img").css({'background-color':'#066516'});
-						localStorage.imguploaded = "true";
-						myApp.alert('IMAGE UPLOADED SUCCESSFULLY!'+localStorage.imguploaded);
+						imguploaded = "true";
+						myApp.alert('IMAGE UPLOADED SUCCESSFULLY!'+imguploaded);
 
 				  		}else{
 							
@@ -323,7 +364,7 @@ function sendImage()
 					   
 					}
 					
-				if (localStorage.videouploaded=="true" && localStorage.imguploaded=="true")
+				if (videouploaded=="true" && imguploaded=="true")
 			   	{
 					$("#pubbtn").append('<button class="cta-btn" onclick="publishVideo()">PUBLISH YOUR VIDEO NOW!</button>');
 			   	}
@@ -338,7 +379,7 @@ function sendImage()
 
 function sendVideo()
 {
-	var videoid = localStorage.videoid;
+	var videoid = videoid;
 	var videoarray = [videoid];
 					
 	var formData = new FormData();
@@ -377,14 +418,14 @@ function sendVideo()
 						if (data=="success")
 						{
 							$("#upload-vid").css({'background-color':'#066516'});
-							localStorage.videouploaded = "true";
+							videouploaded = "true";
 							
-							myApp.alert('VIDEO UPLOADED SUCCESSFULLY!'+localStorage.videouploaded);
+							myApp.alert('VIDEO UPLOADED SUCCESSFULLY!'+videouploaded);
 							}else{
 							myApp.alert('SOMETHING HAS GONE WRONG'+data);
 						}
 						
-										if (localStorage.videouploaded=="true" && localStorage.imguploaded=="true")
+					if (videouploaded=="true" && imguploaded=="true")
 					{
 						$("#pubbtn").append('<button class="cta-btn" onclick="publishVideo()">PUBLISH YOUR VIDEO NOW!</button>');
 					}
@@ -398,31 +439,12 @@ function sendVideo()
 	
 }
 
-/*$(".left-panel-button").click(function(){
-
-	var oldPlayer = document.getElementById('video');
-
-	if (oldPlayer!=null)
-	{
-		videojs(oldPlayer).dispose();
-	}
-	
-	myApp.closePanel();
-
-});*/
-
 $(".left-panel-button").click(function(){
 
-	var oldPlayer = document.getElementById('video');
-
-	if (oldPlayer!=null)
-	{
-		videojs(oldPlayer).dispose();
-	}
-	
 	myApp.closePanel();
 
 });
+
 
 function UploadthankYou()
 {
@@ -431,14 +453,14 @@ function UploadthankYou()
 }	
 
 $("#fileToUpload").click(function(){
-  localStorage.videouploaded = "false";
+  videouploaded = "false";
   $("#upload-vid").css({'background-color':'#b61a1a'});
   //$("#pubbtn").css({'display':'none'});
   $("#pubbtn").empty();
 });
 
 $("#imageToUpload").click(function(){
-	localStorage.imguploaded = "false";
+	imguploaded = "false";
 	$("#upload-img").css({'background-color':'#b61a1a'});
 	//$("#pubbtn").css({'display':'none'});
 	$("#pubbtn").empty();
@@ -473,40 +495,84 @@ function loginUser()
 		
     });
 }
-		 
+
+function loginUserRegistration()
+{	
+	myApp.modalLogin('Please Sign In to continue',
+	
+	function (username,password)
+	{
+		//login callback
+		var username = username;
+		var password = password;
+		var login = 'login';
+		
+		
+		$.ajax({
+		  type: 'POST',  
+		  url: 'http://www.zambezitube.tv/login.php',
+		  //url: 'php/login.php', 
+		  data: { username: username, password: password, login:login },
+		  success: function(response){
+			  if(response=="success")
+			  {
+				  //thankYou();
+			  }else{
+				  myApp.alert("Username And Password Don't Match!");
+				  //loginUserRestriction();
+			  }
+		  },
+			  error: function(XMLHttpRequest, textStatus, errorThrown){
+				  
+				  myApp.alert("Error..."+errorThrown);
+				 // loginUserRestriction();
+			  }
+		});
+	},
+	function (username,password)
+	{
+		//cancel callback
+		mainView.router.back();
+		
+	}
+	
+	)
+
+}	 
+
+function RemoveOldPlayer()
+{
+	var oldPlayer = player;
+	$( ".vjs-playlist" ).empty();//remove all elements from playlist to be re-added later
+	videojs('video').dispose();
+	
+	InitVideoPlayer(jsonArray);
+}
 
 function InitVideoPlayer(VideoSource)
 {
-		//var player = "";
-		//var oldPlayer = document.getElementById('video');
-		//videojs(oldPlayer).dispose();	
-		var player = videojs('video');
-			
-					//$('.vid-heading').text("new dialog title") = player;
-		//$('.vid-content').text("new dialog title");
 		
-		// Initialize the playlist-ui plugin with no option (i.e. the defaults).
+		player = videojs('video');
+		
+		player.playlist(VideoSource);
 		player.playlistUi();
 		
-		//console.log('samplePlaylist is...'+sources);
-		player.playlist(VideoSource);
-		player.playlist.repeat(true);
-		
-		
-		
 		player.on('playlistitem', function() {
+			
 			var currentID = player.playlist.currentItem();
 			$('.vid-heading').text(VideoSource[currentID].name);
 			$('.vid-content').text(VideoSource[currentID].description);
-			myApp.closePanel();
-			//myApp.alert("I am currently playing..."+player.playlist.currentItem());
-			
+						
+			myApp.closePanel();		
+				
   		});
-		
+				
 		player.on('ended', function() {
 			player.playlist.next();
   		});
 }
+
+
 
 function launchVideo(vidtoplay)
 {
@@ -516,15 +582,16 @@ function launchVideo(vidtoplay)
 	var videodata = vidtoplay;
 	var dataresult = videodata.split(",");
 	
-	localStorage.mainvideo = dataresult[0] + '.mp4';
+	mainvideo = dataresult[0] + '.mp4';
 	
 		regView(dataresult[0]); //send video data to register a view
 
 	var maintitle  = dataresult[1];
 	var mainvideo="";
-	mainvideo += '<div data-role="page" id="login-form"><div class="container-fluid" style="margin-top:20px;"><div class="row " id="vidlist"><div class="col-xs-12"><ul style="list-style:none; text-align:center; padding:0px;"><li class="vidheading" id="vidtitle">'+maintitle+'</li><li class="vidthumb"><div id="videoholder"><video width="100%" height="auto" controls><source src="http://www.zambezitube.tv/videos/'+localStorage.mainvideo+'" type="video/mp4"></video></div></li></ul></div></div></div></div>';
+	mainvideo += '<div data-role="page" id="login-form"><div class="container-fluid" style="margin-top:20px;"><div class="row " id="vidlist"><div class="col-xs-12"><ul style="list-style:none; text-align:center; padding:0px;"><li class="vidheading" id="vidtitle">'+maintitle+'</li><li class="vidthumb"><div id="videoholder"><video width="100%" height="auto" controls><source src="http://www.zambezitube.tv/videos/'+mainvideo+'" type="video/mp4"></video></div></li></ul></div></div></div></div>';
 	document.getElementById("vidlist").innerHTML = mainvideo;
 }
+
 
 function regView(videoip)
 {
@@ -545,13 +612,6 @@ function regView(videoip)
 
 $(".button-content").click(function(event){
 	
-	if (document.getElementById('video') != null)
-	{
-		var oldPlayer = document.getElementById('video');
-		videojs(oldPlayer).dispose();	
-	}
-
-		
 	 //$('.bottom-button iframe').removeClass('active-state');
 	 $(".button-content").children().removeClass('active-state');
 	 $(".button-content").removeClass('active-state');
@@ -590,174 +650,8 @@ $("#exitbtn").click(function(){
 
 function thankYou()
 {
+	loggedin = true;
 	mainView.router.loadContent($('#thankyou-tpl').html());
 }
 
-myApp.popup('.popup-terms');
-
-/*$$('.form-to-data').on('click', function(){
-
-		
-		myApp.alert("button has been clicked!");
-		var formData = myApp.formToData('#my-form');
-		var username = $("#username").val();
-		var password = $("#password").val();
-		var login = 'login';
-		
-		$.ajax({  
-		
-			type: 'POST',  
-			url: 'http://www.zambezitube.tv/login.php',
-			//url: 'php/login.php', 
-			data: { username: username, password: password, login:login },
-			success: function(response) {
-				if(response=="success")
-				{
-						alert("Logging You In...");
-						launchVideos();
-						$("#uploadbtn").show ();
-		 				$("#logoutbtn").show ();					
-				}
-				if(response=="failed")
-				{
-					alert("Username And Password Don't Match!");	
-				}
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown){
-				
-					alert("Error..."+errorThrown);
-			}
-			
-		});
-
-});*/ 
 //myApp.popup('.popup-terms');
-/*
-var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
-		var self = this;
- 		this.store = new MemoryStore(function() {
-        	$('.policy-content').html(new PrivacyPolicy(self.store).render().el);//load the home div class
-   		});	
-		
-    },
-	
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-		document.getElementById("exitbtn").addEventListener ("click", this.exitApp, false);
-		document.getElementById("uploadbtn").addEventListener ("click", this.uploadVideo, false);
-		document.getElementById("logoutbtn").addEventListener ("click", this.LogOut, false);
-		
-		document.getElementById("homebtn").addEventListener ("click", this.returnHome, false);
-		document.getElementById("regbtn").addEventListener ("click", this.regUser, false);
-		document.getElementById("vidmnu").addEventListener ("click", this.vidMenu, false);
-		document.getElementById("logbtn").addEventListener ("click", this.logUser, false);
-		
-		
-		 $("#uploadbtn").hide ();
-		 $("#logoutbtn").hide ();
-		 
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
-    },
-	showAlert: function(message, title) {
-		
-		alert(title ? (title + ": " + message) : message);
-		
-	},
-	exitApp: function() {
-		navigator.app.exitApp();
-	},
-	LogOut: function() {
-		
-			$.ajax({  
-		
-			type: 'POST',  
-			url: 'http://www.zambezitube.tv/logout.php',
-			//url: 'php/logout.php', 
-			success: function(response) {
-				if(response=="success")
-				{
-					
-					alert("You have been logged out!");
-					returnHome();
-					
-				}
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown){
-				
-				alert("Error..."+errorThrown);
-			}
-			
-		});
-	},
-	uploadVideo: function() {
-		
-		var self = this;
-		this.store = new MemoryStore(function() {
-			$('.main-content').html(new UploadVideo(self.store).render().el);//load the home div class
-		});	
-		
-	},
-	
-	returnHome: function() {
-		
-		var self = this;
-		this.store = new MemoryStore(function() {
-			$('.main-content').html(new HomeView(self.store).render().el);//load the home div class
-			$("#navbar").collapse('hide');
-		});	
-		
-	},
-	regUser: function() {
-		
-		var self = this;
-		this.store = new MemoryStore(function() {
-			$('.main-content').html(new SignUp(self.store).render().el);//load the home div class
-			$("#navbar").collapse('hide');
-		});	
-		
-	},
-	logUser: function() {
-		
-		var self = this;
-		this.store = new MemoryStore(function() {
-			$('.main-content').html(new HomeView(self.store).render().el);//load the home div class
-			$("#navbar").collapse('hide');
-		});	
-		
-	},
-	vidMenu: function() {
-		
-		var self = this;
-		this.store = new MemoryStore(function() {
-			$('.main-content').html(new VideoPage(self.store).render().el);//load the home div class
-			$("#navbar").collapse('hide');
-		});	
-		
-	}
-	
-};
-*/
