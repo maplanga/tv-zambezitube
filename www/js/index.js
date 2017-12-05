@@ -293,9 +293,29 @@ function publishVideo()
   var videoimg = $("#videoimg").val();
   var videodesc = $("#videodesc").val();
 	
-myApp.showPreloader();
+	myApp.showPreloader();
+	
   $.ajax({  
-  
+  	  xhr: function() {
+		var xhr = new window.XMLHttpRequest();
+		xhr.upload.addEventListener("progress", function(evt) {
+		  if (evt.lengthComputable) {
+			var percentComplete = evt.loaded / evt.total;
+			percentComplete = parseInt(percentComplete * 100);
+				$("#vidcont").css({'display':'block','background-color':'#900'});
+				var percentVal = percentComplete + '%';
+				$("#vidprog").width(percentVal);
+				$("#vidper").html(percentVal);
+				
+			if (percentComplete === 100) {
+				myApp.hidePreloader();
+			}
+	
+		  }
+		}, false);
+	
+		return xhr;
+	  },
 	type: 'POST',  
 	url: 'http://www.zambezitube.tv/uploadvids.php',
 	//url: 'php/uploadvids.php', 
@@ -328,7 +348,7 @@ function sendImage()
 	var imageData = new FormData();
 	imageData.append('imageToUpload', $('#imageToUpload')[0].files[0]);
 	imageData.append('imageid', imageid);
-	
+	 myApp.showPreloader();
 				  $.ajax({
 				xhr: function() {
 				  var xhr = new window.XMLHttpRequest();
@@ -336,7 +356,7 @@ function sendImage()
 				  xhr.upload.addEventListener("progress", function(evt) {
 					if (evt.lengthComputable) {
 						
-					 myApp.showPreloader();
+					
 					  var percentComplete = evt.loaded / evt.total;
 					  percentComplete = parseInt(percentComplete * 100);
 						  $("#imgcont").css({'display':'block','background-color':'#900'});
@@ -345,7 +365,7 @@ function sendImage()
 						  $("#imgper").html(percentVal);
 						  
 					  if (percentComplete === 100) {
-			  
+			  			myApp.hidePreloader();
 					  }
 			  
 					}
@@ -360,7 +380,7 @@ function sendImage()
 			   processData: false,  // tell jQuery not to process the data
 			   contentType: false,  // tell jQuery not to set contentType
 			   success : function(data) {
-				   myApp.hidePreloader();
+				   
 				   	if (data=="success")
 				   	{
 						$("#upload-img").css({'background-color':'#066516'});
@@ -413,7 +433,7 @@ function sendVideo()
 				$("#vidper").html(percentVal);
 				
 			if (percentComplete === 100) {
-	
+				myApp.hidePreloader();
 			}
 	
 		  }
@@ -441,7 +461,12 @@ function sendVideo()
 						
 					if (videouploaded=="true" && imguploaded=="true")
 					{
-						$("#pubbtn").append('<button class="cta-btn" onclick="publishVideo()">PUBLISH YOUR VIDEO NOW!</button>');
+							$("#pubbtn").append('<a href="#" class="button button-big button-red cta-btn">PUBLISH YOUR VIDEO NOW!</a>');
+							$(".cta-btn").click(function(){
+		
+								publishVideo();
+							
+							});
 					}
 	
 					   
@@ -670,4 +695,4 @@ function thankYou()
 	mainView.router.loadContent($('#thankyou-tpl').html());
 }
 
-//myApp.popup('.popup-terms');
+myApp.popup('.popup-terms');
