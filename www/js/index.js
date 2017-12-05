@@ -28,7 +28,8 @@ var myApp = new Framework7({
 })
 
 var loggedin = false;
-var videoid;
+var uploadID = Math.floor(Math.random() * 9000000000) + 1000000000;	
+
 var videouploaded = "false";
 var imguploaded = "false";
 var player;
@@ -160,12 +161,8 @@ $$(document).on('pageInit', function (e) {
 	
 	if (page.name === 'upload-tpl') {
 		
-		if (loggedin == false)
-		{
-			loginUserRegistration();
-		}
-		
-		videoid = Math.floor(Math.random() * 9000000000) + 1000000000;	
+			
+		console.log('video to be uploaded with the id nr...'+uploadID);
 		// Define a div wrapper for the view. The div wrapper is used to attach events.
 		this.el = $('<div/>');
 		var btn = document.getElementById('nxt-button');
@@ -173,6 +170,13 @@ $$(document).on('pageInit', function (e) {
 		imguploaded=false;
 		
 		$("#pub-btn").hide();
+		
+		if (loggedin == false)
+		{
+			loginUserRegistration();
+		}
+		
+
 		
 	}
 	
@@ -229,7 +233,6 @@ $$(document).on('pageInit', function (e) {
 	
 myApp.onPageReinit('upload-tpl', function(page){
 			
-		videoid = Math.floor(Math.random() * 9000000000) + 1000000000;	
 		// Define a div wrapper for the view. The div wrapper is used to attach events.
 		this.el = $('<div/>');
 		var btn = document.getElementById('nxt-button');
@@ -281,8 +284,10 @@ myApp.alert('clicked...');
 
 function publishVideo()
 {
-		
-  var videoid = videoid;
+	
+	
+  var videoid = uploadID;
+  
   var videotitle = $("#videotitle").val();
   var videofile = $("#videofile").val();
   var videoimg = $("#videoimg").val();
@@ -296,11 +301,16 @@ myApp.showPreloader();
 	//url: 'php/uploadvids.php', 
 	data: { videoid: videoid, videotitle: videotitle,  videofile: videofile, videoimg: videoimg, videodesc: videodesc },
 	success: function(response) {
-		myApp.hidePreloader();
 		if(response=="success")
 		{
+			myApp.hidePreloader();
 			myApp.alert('VIDEO HAS BEEN UPLOADED SUCCESSFULLY!');
 			UploadthankYou();
+		}
+		if(response=="missing")
+		{
+			myApp.hidePreloader();
+			myApp.alert('PLEASE FILL IN A TITLE AND A DESCRIPTION');
 		}
 	},
 	error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -314,8 +324,7 @@ myApp.showPreloader();
 
 function sendImage()
 {
-	var imageid = videoid;
-		  
+	var imageid = uploadID;
 	var imageData = new FormData();
 	imageData.append('imageToUpload', $('#imageToUpload')[0].files[0]);
 	imageData.append('imageid', imageid);
@@ -356,7 +365,7 @@ function sendImage()
 				   	{
 						$("#upload-img").css({'background-color':'#066516'});
 						imguploaded = "true";
-						myApp.alert('IMAGE UPLOADED SUCCESSFULLY!'+imguploaded);
+						myApp.alert('IMAGE UPLOADED SUCCESSFULLY!');
 
 				  		}else{
 							
@@ -366,7 +375,12 @@ function sendImage()
 					
 				if (videouploaded=="true" && imguploaded=="true")
 			   	{
-					$("#pubbtn").append('<button class="cta-btn" onclick="publishVideo()">PUBLISH YOUR VIDEO NOW!</button>');
+					$("#pubbtn").append('<a href="#" class="button button-big button-red cta-btn">PUBLISH YOUR VIDEO NOW!</a>');
+					$(".cta-btn").click(function(){
+
+						publishVideo();
+					
+					});
 			   	}
 				   
 				   $("#imgcont").css({'display':'none'});
@@ -379,9 +393,9 @@ function sendImage()
 
 function sendVideo()
 {
-	var videoid = videoid;
+	var videoid = uploadID;
 	var videoarray = [videoid];
-					
+	
 	var formData = new FormData();
 	formData.append('fileToUpload', $('#fileToUpload')[0].files[0]);
 	formData.append('videoid', videoid);
@@ -420,7 +434,7 @@ function sendVideo()
 							$("#upload-vid").css({'background-color':'#066516'});
 							videouploaded = "true";
 							
-							myApp.alert('VIDEO UPLOADED SUCCESSFULLY!'+videouploaded);
+							myApp.alert('VIDEO UPLOADED SUCCESSFULLY!');
 							}else{
 							myApp.alert('SOMETHING HAS GONE WRONG'+data);
 						}
@@ -444,6 +458,8 @@ $(".left-panel-button").click(function(){
 	myApp.closePanel();
 
 });
+
+
 
 
 function UploadthankYou()
@@ -576,7 +592,7 @@ function InitVideoPlayer(VideoSource)
 
 function launchVideo(vidtoplay)
 {
-		$("#videomenu").show();
+	$("#videomenu").show();
 	$("#video-navbar").collapse('hide');
 	
 	var videodata = vidtoplay;
@@ -609,7 +625,7 @@ function regView(videoip)
 		});
 }
 
-
+/*
 $(".button-content").click(function(event){
 	
 	 //$('.bottom-button iframe').removeClass('active-state');
@@ -641,7 +657,7 @@ $(".back-button").click(function(){
 	 $(".button-content").removeClass('active-state');
 	 $(".button-content").children("span").animate({opacity: '0'},"fast");
 	
-}); 
+}); */
 $("#exitbtn").click(function(){
 
 	navigator.app.exitApp();
