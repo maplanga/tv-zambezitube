@@ -2,13 +2,23 @@
   We include some minimal custom CSS to make the playlist UI look good
   in this context.
 */
+
+.item-content .text-dark
+{
+	color: #000000;
+}
+.item-content .large-size
+{
+	font-size:18px;
+	text-align:left;
+}
 .readmore
 {
 	margin-bottom:10px;
 }
 .videoicomenu {
     border: 1px solid #ffffff;
-    color: #fffffff;
+    color: #ffffff;
 }
 .popover-inner .content-block
 {
@@ -33,6 +43,10 @@
 }
 .list-block .item-title.label {
     width: 70%;
+}
+
+.list-block .item-title.popup-login {
+    width: 35%;
 }
 .item-title
 {
@@ -646,4 +660,35 @@ input[type="submit"]
 {
 	margin:0px;
 	padding:0px;
+}
+
+
+.backico a
+{
+	color: #000000;
+}
+
+a
+{
+	color: #007aff;
+}
+
+.backico a:hover, a:focus {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: #007aff;
+    text-decoration: none;
+}
+
+a
+{
+	color: #007aff;
+}
+
+a:hover, a:focus {
+    color: #007aff;
+    text-decoration: none;
 }
