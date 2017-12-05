@@ -10,7 +10,7 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com data: https://fonts.gstatic.com; font-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com data: https://fonts.gstatic.com ; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com data: https://fonts.gstatic.com; font-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com data: https://fonts.gstatic.com ; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' 'unsafe-inline' 'unsafe-eval' http://www.zambezitube.tv https://fonts.googleapis.com data: https://fonts.gstatic.com ">
 
     <!-- Required meta tags-->
     <meta charset="utf-8">
@@ -203,7 +203,7 @@
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
         <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+			<div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div>
         </div> 
         <!-- Right part doesn't related to other pages -->
         <div class="right">
@@ -236,9 +236,9 @@
 <div class="navbar">
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
-        <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
-        </div> 
+         <div class="left sliding" style="padding-left:20px;">
+			<div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div>
+        </div>
         <!-- Right part doesn't related to other pages -->
         <div class="right">
 			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
@@ -283,8 +283,8 @@
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
         <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
-        </div> 
+			<div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div>
+        </div>
         <!-- Right part doesn't related to other pages -->
         <div class="right">
 			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
@@ -330,8 +330,8 @@
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
         <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
-        </div> 
+			<div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div>
+        </div>
         <!-- Right part doesn't related to other pages -->
         <div class="right">
 			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
@@ -379,8 +379,8 @@
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
         <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
-        </div> 
+			<div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div>
+        </div>
         <!-- Right part doesn't related to other pages -->
         <div class="right">
 			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
@@ -431,8 +431,8 @@
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
         <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
-        </div> 
+			<div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div>
+        </div>
         <!-- Right part doesn't related to other pages -->
         <div class="right">
 			<a href="#" class="button icon-only button-raised open-panel" id="mainmenu"><i class="f7-icons size-29">menu</i></a>
@@ -444,7 +444,7 @@
         <div class="page-content  hide-bars-on-scroll">
             <div class="content-block">
 				<div class="row">
-        			<div class="col-90"><video id="video" class="video-js" controls data-setup='{"fluid": true}' ></video></div>
+        			<div class="col-90"><video id="video" class="video-js" data-setup='{"controls": false, "autoplay": false,  "nativeControlsForTouch": true, "fluid": true, "preload": "auto"}'></video></div>
       			</div>
 				<div class="row">
         			<div class="col-90">
@@ -453,6 +453,7 @@
 					</div>
       			</div>
 				<div class="row">
+      			</div>
         			<div class="col-90">
 						<a href="#" data-panel="right" class=" open-panel button button-big button-fill button-raised color-blue">MORE VIDEOS</a>
 					</div>
@@ -468,7 +469,7 @@
     <div class="navbar-inner">
         <!-- Now, Left and Center parts reflect page title and page links, let's slide them -->
         <div class="left sliding" style="padding-left:20px;">
-			<div class="back-button"><a href="#" class="button-fill back"><div class="button-with-icon"><div class="button-content"></div></div></a></div>
+			<div class="backico"><div class="backico"><a href="#" class="icon-only back"><i class="f7-icons size-29">arrow_left_fill</i></a></div></div>
         </div> 
         <!-- Right part doesn't related to other pages -->
         <div class="right">
@@ -532,12 +533,12 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/memory-store.js"></script>
     <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
   	<script type="text/javascript" src="js/video.js"></script>
   	<script type="text/javascript" src="js/videojs-playlist.js"></script>
   	<script type="text/javascript" src="js/videojs-playlist-ui.js"></script>
   	<script type="text/javascript" src="js/videojs-responsive-layout.js"></script>
-    <script type="text/javascript" src="js/SocialSharing.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
 
 </body>
 
