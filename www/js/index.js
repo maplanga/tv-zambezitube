@@ -163,7 +163,6 @@ $$(document).on('pageInit', function (e) {
 	if (page.name === 'upload-tpl') {
 		
 			
-		console.log('video to be uploaded with the id nr...'+uploadID);
 		// Define a div wrapper for the view. The div wrapper is used to attach events.
 		this.el = $('<div/>');
 		var btn = document.getElementById('nxt-button');
@@ -187,8 +186,8 @@ $$(document).on('pageInit', function (e) {
 		  
 			$.ajax({
 			type: 'POST',
-			//url: 'http://www.zambezitube.tv/get_json.php',
-			url: 'php/get_json.php',
+			url: 'http://www.zambezitube.tv/get_json.php',
+			//url: 'php/get_json.php',
 			data: 'id=testdata',
 			dataType: 'json',
 			cache: false,
@@ -206,7 +205,6 @@ $$(document).on('pageInit', function (e) {
 				  var videopath = "http://www.zambezitube.tv/videos/";
 				  
 				  var videodata = data.items[n].ID+','+data.items[n].title;
-				  //console.log('the video information is...'+videolink);
 				  jsonArray.push(
 				  
 				  {sources:[{src: videopath+videolink+'.mp4',type: 'video/mp4'}], thumbnail: videopath+videolink+'.jpg', name:videotitle, description:videodesc}
@@ -214,7 +212,6 @@ $$(document).on('pageInit', function (e) {
 				  
 				  
 				  );
-				//console.log('I am trying to load...'+ videolink+'.mp4');
 				
 					});
 					if (player != null)
