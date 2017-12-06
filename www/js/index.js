@@ -19,7 +19,7 @@
  
 var myApp = new Framework7({
 	
-	hideToolbarOnPageScroll: true,
+	showBarsOnPageScrollEnd: false,
 	animateNavBackIcon: true,
     precompileTemplates: true, //
     template7Pages: true, //enable Template7 rendering for pages
@@ -51,7 +51,7 @@ $$(document).on('deviceready', function() {
 	//loggedin = "false";
 });
 
-document.addEventListener("offline", function(){ myApp.alert("An internet connection is required.") }, false);
+//document.addEventListener("offline", function(){ myApp.alert("An internet connection is required.") }, false);
 
 <!--QUICK LIST OF FUNCTIONS-->
 /*thankYou()
@@ -77,7 +77,7 @@ $$(document).on('pageInit', function (e) {
     // Get page data from event data
     var navbar = e.detail.navbar;
 	var page = e.detail.page;
-
+	VideoCheck();
 	
 	if (page.name === 'login-tpl')
 	{
@@ -101,6 +101,7 @@ $$(document).on('pageInit', function (e) {
 	
 		
 	if (page.name === 'signup-tpl') {
+		
 		
 		$("#register-button").click(function(){
 
@@ -186,8 +187,8 @@ $$(document).on('pageInit', function (e) {
 		  
 			$.ajax({
 			type: 'POST',
-			url: 'http://www.zambezitube.tv/get_json.php',
-			//url: 'php/get_json.php',
+			//url: 'http://www.zambezitube.tv/get_json.php',
+			url: 'php/get_json.php',
 			data: 'id=testdata',
 			dataType: 'json',
 			cache: false,
@@ -481,11 +482,8 @@ function sendVideo()
 $(".left-panel-button").click(function(){
 
 	myApp.closePanel();
-
+	//dispose video if it's open
 });
-
-
-
 
 function UploadthankYou()
 {
@@ -539,6 +537,7 @@ function loginUser()
 
 function loginUserRegistration()
 {	
+
 	myApp.modalLogin('Please Sign In to continue',
 	
 	function (username,password)
@@ -557,16 +556,16 @@ function loginUserRegistration()
 		  success: function(response){
 			  if(response=="success")
 			  {
-				  //thankYou();
+				  thankYou();
 			  }else{
 				  myApp.alert("Username And Password Don't Match!");
-				  //loginUserRestriction();
+				  loginUserRegistration();
 			  }
 		  },
 			  error: function(XMLHttpRequest, textStatus, errorThrown){
 				  
 				  myApp.alert("Error..."+errorThrown);
-				 // loginUserRestriction();
+				  loginUserRegistration();
 			  }
 		});
 	},
@@ -581,6 +580,18 @@ function loginUserRegistration()
 
 }	 
 
+function VideoCheck()
+{
+	if (player != null)
+	{
+		ClearVideo();
+	}
+}
+function ClearVideo()
+{
+	$( ".vjs-playlist" ).empty();//remove all elements from playlist to be re-added later
+	videojs('video').reset();
+}
 function RemoveOldPlayer()
 {
 	var oldPlayer = player;
@@ -695,4 +706,4 @@ function thankYou()
 	mainView.router.loadContent($('#thankyou-tpl').html());
 }
 
-myApp.popup('.popup-terms');
+//myApp.popup('.popup-terms');
