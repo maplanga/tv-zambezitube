@@ -187,8 +187,8 @@ $$(document).on('pageInit', function (e) {
 		  
 			$.ajax({
 			type: 'POST',
-			//url: 'http://www.zambezitube.tv/get_json.php',
-			url: 'php/get_json.php',
+			url: 'http://www.zambezitube.tv/get_json.php',
+			//url: 'php/get_json.php',
 			data: 'id=testdata',
 			dataType: 'json',
 			cache: false,
