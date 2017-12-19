@@ -48,6 +48,7 @@ var mainView = myApp.addView('.view-main', {
 $$(document).on('deviceready', function() {
 	
     console.log("Device is ready!");	
+	window.plugins.PushbotsPlugin.initialize("5a38e5099b823a6c4f8b4578", {"android":{"sender_id":"477760520537"}});
 	//loggedin = "false";
 });
 
@@ -186,8 +187,8 @@ $$(document).on('pageInit', function (e) {
 		  
 			$.ajax({
 			type: 'POST',
-			url: 'http://www.zambezitube.tv/get_json.php',
-			//url: 'php/get_json.php',
+			//url: 'http://www.zambezitube.tv/get_json.php',
+			url: 'php/get_json.php',
 			data: 'id=testdata',
 			dataType: 'json',
 			cache: false,
